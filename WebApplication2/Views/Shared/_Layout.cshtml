@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,8 +29,8 @@
                         </li>
                     </ul>
                 </div>
-                <form asp-controller="Home" asp-action="Login" method="get">
-                <button type="submit" class="btn btn-primary">Login</button>
+                <form asp-controller="Home" asp-action="Login" method="get"> 
+                    <button id="BtnAccount" type="submit" class="btn btn-primary dropdown-toggle">@(!string.IsNullOrEmpty(Context.Request.Cookies["UserName"]) ? Context.Request.Cookies["UserName"] : "Login")</button>
                 </form>
             </div>
         </nav>

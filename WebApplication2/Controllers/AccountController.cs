@@ -1,5 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Security.Claims;
 using WebApplication2.Data;
 using WebApplication2.Data.Entities;
 using WebApplication2.Migrations;
@@ -53,8 +59,14 @@ namespace WebApplication2.Controllers
                 Password = viewModel.Password,
             };
 
+            //save to sql server
             await dbContext.Users.AddAsync(user);
             await dbContext.SaveChangesAsync();
+
+            //save login as cookie
+            HttpContext.Response.Cookies.Append("UserId", user.Id.ToString());
+            HttpContext.Response.Cookies.Append("UserName", user.Username.ToString());
+            HttpContext.Response.Cookies.Append("UserEmail", user.Email);
 
             return RedirectToAction("Index", "Home");
         }
@@ -71,7 +83,7 @@ namespace WebApplication2.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(AddUserViewModel viewModel)
+        public async Task<IActionResult> Login(AddUserViewModel viewModel)
         {
             var users = dbContext.Users.ToList();
             users.FirstOrDefault();
@@ -86,7 +98,24 @@ namespace WebApplication2.Controllers
                 return View(viewModel);
             }
 
+            HttpContext.Response.Cookies.Append("UserId", user.Id.ToString());
+            HttpContext.Response.Cookies.Append("UserName", user.Username.ToString());
+            HttpContext.Response.Cookies.Append("UserEmail", user.Email);
+            //Context.Request.Cookies["UserEmail"]
+
+            ViewBag.Username = user.Username;
+
             return RedirectToAction("Index", "Home");
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            // Remove cookies
+            Response.Cookies.Delete("UserId");
+            Response.Cookies.Delete("UserName");
+            Response.Cookies.Delete("UserEmail");
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }
