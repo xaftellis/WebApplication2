@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Security.Claims;
 using WebApplication2.Data;
-using WebApplication2.Data.Entities;
 using WebApplication2.Migrations;
 using WebApplication2.Models;
 
@@ -29,7 +28,7 @@ namespace WebApplication2.Controllers
         }
 
        [HttpPost]
-        public async Task<IActionResult> Create(AddUserViewModel viewModel)
+        public async Task<IActionResult> Create(User viewModel)
         {
             // Check if email or username already exists
             
@@ -83,7 +82,7 @@ namespace WebApplication2.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(AddUserViewModel viewModel)
+        public async Task<IActionResult> Login(User viewModel)
         {
             var users = dbContext.Users.ToList();
             users.FirstOrDefault();

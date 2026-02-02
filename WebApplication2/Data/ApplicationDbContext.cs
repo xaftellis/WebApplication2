@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Formats.Cbor;
-using WebApplication2.Data.Entities;
+using WebApplication2.Models;
 
 namespace WebApplication2.Data
 {
