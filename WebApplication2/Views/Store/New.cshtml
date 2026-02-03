@@ -1,9 +1,39 @@
 ﻿@{
         ViewData["Title"] = "New Listing";
 }
-
 @model WebApplication2.Models.Product
 <h1>Create Account</h1>
+
+@* ===== Single-image Dropzone (paste into a .cshtml view) ===== *@
+
+<div class="upload-wrapper mt-4">
+    <label class="form-label fw-semibold">Upload Cover Image</label>
+
+    <div class="upload-dropzone" id="dropzone" role="button" aria-label="Upload image">
+        <!-- single file input (no multiple) -->
+        <input type="file"
+               id="fileInput"
+               name="Image"
+               accept="image/*"
+               hidden />
+
+        <!-- placeholder content (will be replaced by preview) -->
+        <div class="upload-content" id="dropzonePlaceholder">
+            <div class="upload-icon">📁</div>
+            <div class="upload-text">
+                <strong>Drag & drop an image here</strong>
+                <div class="text-muted">or click to browse</div>
+            </div>
+        </div>
+
+        <!-- preview container lives inside the dropzone -->
+        <div class="drop-preview" id="dropPreview" aria-hidden="true" style="display:none;">
+            <!-- preview injected here by JS -->
+        </div>
+    </div>
+
+    <div class="form-text text-muted mt-2">Accepted: images only. One image.</div>
+</div>
 
 <form method="post">
     <div class="mt-3">
@@ -27,6 +57,286 @@
         <button type="submit" class="btn btn-primary">Add Listing</button>
     </div>
 </form>
+
+<style>
+    .upload-dropzone {
+        border: 2px dashed #ced4da;
+        border-radius: 14px;
+        padding: 18px;
+        text-align: center;
+        background: #fafafa;
+        cursor: pointer;
+        min-height: 220px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        transition: border-color .25s ease, background .25s ease, box-shadow .25s ease, transform .15s ease;
+    }
+        .upload-dropzone:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(13,110,253,.12);
+        }
+
+        .upload-dropzone:active {
+            transform: scale(.985);
+        }
+
+        .upload-dropzone.dragover {
+            border-color: #0d6efd;
+            background: #eef4ff;
+            box-shadow: 0 0 0 4px rgba(13,110,253,.15);
+        }
+
+    .upload-content {
+        pointer-events: none;
+        animation: fadeUp .35s ease;
+    }
+
+    .upload-icon {
+        font-size: 34px;
+        margin-bottom: 10px;
+        transition: transform .25s ease;
+    }
+
+    .upload-dropzone:hover .upload-icon {
+        transform: scale(1.08);
+    }
+
+    @@keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(6px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Preview */
+    .drop-preview {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        animation: fadeZoom .35s ease;
+    }
+
+    @@keyframes fadeZoom {
+        from {
+            opacity: 0;
+            transform: scale(.96);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .drop-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform .4s ease;
+    }
+
+    .upload-dropzone:hover .drop-preview img {
+        transform: scale(1.04);
+    }
+
+    /* Buttons */
+    .preview-actions {
+        position: absolute;
+        bottom: 14px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-change-preview,
+    .btn-remove-preview {
+        padding: 7px 14px;
+        border-radius: 999px;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        transition: transform .15s ease, box-shadow .15s ease, background .2s ease, opacity .2s ease;
+    }
+
+    .btn-change-preview {
+        background: rgba(255,255,255,.92);
+        box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    }
+
+        .btn-change-preview:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(0,0,0,.22);
+        }
+
+    .btn-remove-preview {
+        background: rgba(0,0,0,.65);
+        color: #fff;
+    }
+
+        .btn-remove-preview:hover {
+            background: rgba(220,53,69,.85);
+            transform: translateY(-1px);
+        }
+
+        .btn-change-preview:active,
+        .btn-remove-preview:active {
+            transform: scale(.96);
+        }
+
+    /* Top delete icon */
+    .preview-top-delete {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(0,0,0,.55);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        transition: transform .15s ease, background .2s ease, box-shadow .15s ease;
+    }
+
+        .preview-top-delete:hover {
+            background: rgba(220,53,69,.9);
+            transform: scale(1.08);
+            box-shadow: 0 6px 16px rgba(220,53,69,.35);
+        }
+
+        .preview-top-delete:active {
+            transform: scale(.92);
+        }
+        
+</style>
+
+
+<script>
+        (function() {
+            const dropzone = document.getElementById("dropzone");
+            const fileInput = document.getElementById("fileInput");
+            const placeholder = document.getElementById("dropzonePlaceholder");
+            const previewContainer = document.getElementById("dropPreview");
+
+            // open file dialog on click
+            dropzone.addEventListener("click", () => fileInput.click());
+
+            // drag state UI
+            dropzone.addEventListener("dragover", e => {
+                e.preventDefault();
+                dropzone.classList.add("dragover");
+            });
+            dropzone.addEventListener("dragleave", () => {
+                dropzone.classList.remove("dragover");
+            });
+
+            // drop handler
+            dropzone.addEventListener("drop", e => {
+                e.preventDefault();
+                dropzone.classList.remove("dragover");
+                const files = e.dataTransfer.files;
+                if (files && files.length) {
+                    handleFile(files[0]);
+                }
+            });
+
+            // file dialog change
+            fileInput.addEventListener("change", e => {
+                const f = e.target.files && e.target.files[0];
+                if (f) handleFile(f);
+            });
+
+            function handleFile(file) {
+                // only images
+                if (!file.type.startsWith("image/")) {
+                    alert("Please upload an image file.");
+                    fileInput.value = "";
+                    return;
+                }
+
+                // read and preview
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    showPreview(ev.target.result, file.name);
+                };
+                reader.readAsDataURL(file);
+            }
+
+            function showPreview(dataUrl, filename) {
+                // hide placeholder, show preview container
+                placeholder.style.display = "none";
+                previewContainer.style.display = "block";
+                previewContainer.innerHTML = "";
+
+                // create image element
+                const img = document.createElement("img");
+                img.src = dataUrl;
+                img.alt = filename || "Preview image";
+
+                img.style.opacity = "0";
+                requestAnimationFrame(() => img.style.opacity = "1");
+
+                // top-right delete button
+                const topDelete = document.createElement("button");
+                topDelete.type = "button";
+                topDelete.className = "preview-top-delete";
+                topDelete.innerHTML = "🗑";
+                topDelete.title = "Remove image";
+                topDelete.addEventListener("click", removePreview);
+
+                // action buttons at bottom (change / remove)
+                const actions = document.createElement("div");
+                actions.className = "preview-actions";
+
+                const btnChange = document.createElement("button");
+                btnChange.type = "button";
+                btnChange.className = "btn-change-preview";
+                btnChange.textContent = "Change";
+                btnChange.addEventListener("click", () => fileInput.click());
+
+                const btnRemove = document.createElement("button");
+                btnRemove.type = "button";
+                btnRemove.className = "btn-remove-preview";
+                btnRemove.textContent = "Remove";
+                btnRemove.addEventListener("click", removePreview);
+
+                actions.appendChild(btnChange);
+                actions.appendChild(btnRemove);
+
+                previewContainer.appendChild(img);
+                previewContainer.appendChild(topDelete);
+                previewContainer.appendChild(actions);
+            }
+
+            function removePreview() {
+                // clear preview and file input
+                previewContainer.innerHTML = "";
+                previewContainer.style.display = "none";
+                placeholder.style.display = "block";
+                // Reset the file input so same file can be added again if needed.
+                fileInput.value = "";
+            }
+
+            // Optional: prevent accidental form submit when dropzone is focused and Enter pressed
+            dropzone.addEventListener("keydown", function(e) {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    fileInput.click();
+                }
+            });
+        })();
+</script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
