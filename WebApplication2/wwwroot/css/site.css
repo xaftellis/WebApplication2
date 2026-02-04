@@ -29,3 +29,24 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+.account-dropdown .dropdown-menu {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 160ms ease, transform 160ms ease;
+  border-radius: 0.5rem;
+}
+
+.account-dropdown .dropdown-menu.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.account-dropdown .dropdown-item {
+  font-size: 0.95rem;
+}
+
+.account-dropdown .dropdown-header {
+  font-weight: 600;
+  color: var(--bs-secondary-color);
+}
