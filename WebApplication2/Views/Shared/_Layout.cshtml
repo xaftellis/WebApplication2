@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="~/WebApplication2.styles.css" asp-append-version="true" />
 </head>
 <body>
+    @{
+        var userName = Context.Request.Cookies["UserName"];
+        var isLoggedIn = !string.IsNullOrWhiteSpace(userName);
+    }
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -32,9 +36,36 @@
                         </li>
                     </ul>
                 </div>
-                <form asp-controller="Home" asp-action="Login" method="get"> 
-                    <button id="BtnAccount" type="submit" class="btn btn-primary dropdown-toggle">@(!string.IsNullOrEmpty(Context.Request.Cookies["UserName"]) ? Context.Request.Cookies["UserName"] : "Login")</button>
-                </form>
+                <div class="d-flex align-items-center">
+                    @if (isLoggedIn)
+                    {
+                        <div class="dropdown account-dropdown">
+                            <button id="BtnAccount"
+                                    type="button"
+                                    class="btn btn-primary dropdown-toggle"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                @userName
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow-sm account-dropdown-menu" aria-labelledby="BtnAccount">
+                                <li>
+                                    <h6 class="dropdown-header">Signed in as @userName</h6>
+                                </li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Dashboard</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Privacy">Account settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">Sign out</a></li>
+
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <form asp-controller="Home" asp-action="Login" method="get">
+                            <button id="BtnAccount" type="submit" class="btn btn-primary">Login</button>
+                        </form>
+                    }
+                </div>
             </div>
         </nav>
     </header>
