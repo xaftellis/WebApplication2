@@ -115,5 +115,11 @@ namespace WebApplication2.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
     }
 }

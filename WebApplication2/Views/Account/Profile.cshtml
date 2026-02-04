@@ -1,0 +1,255 @@
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<section class="profile-hero">
+    <div class="profile-hero__overlay"></div>
+    <div class="container profile-hero__content">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+                <div class="profile-identity">
+                    <div class="profile-avatar" aria-hidden="true">JD</div>
+                    <div>
+                        <p class="profile-kicker">Account profile</p>
+                        <h1 class="profile-name" data-profile-name>Jordan Delgado</h1>
+                        <p class="profile-handle" data-profile-handle>@jordan.delgado</p>
+                        <p class="profile-meta">
+                            Creative lead · Based in Toronto · Joined 2021 · <span data-profile-status>Available for collabs</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button class="btn btn-primary profile-action" id="followBtn">Follow</button>
+                    <button class="btn btn-outline-light profile-action" id="messageBtn">Send message</button>
+                    <button class="btn btn-outline-light profile-action" id="copyBtn">Copy profile link</button>
+                    <span class="profile-action-status" id="copyStatus" role="status" aria-live="polite"></span>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="profile-summary">
+                    <div class="profile-summary__header">
+                        <h2>Overview</h2>
+                        <span class="profile-badge">Pro Member</span>
+                    </div>
+                    <div class="profile-summary__stats">
+                        <div>
+                            <p class="stat-label">Followers</p>
+                            <p class="stat-value" data-profile-followers>28.4K</p>
+                        </div>
+                        <div>
+                            <p class="stat-label">Projects</p>
+                            <p class="stat-value" data-profile-projects>142</p>
+                        </div>
+                        <div>
+                            <p class="stat-label">Experience</p>
+                            <p class="stat-value" data-profile-experience>8 yrs</p>
+                        </div>
+                    </div>
+                    <div class="profile-summary__cta">
+                        <button class="btn btn-light w-100">View public portfolio</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container profile-section" data-animate>
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="profile-card">
+                <h3>About</h3>
+                <p data-profile-about>
+                    A multidisciplinary creator focused on building immersive retail and digital experiences. This
+                    profile is a template—swap this text with the real bio, share quick wins, and highlight the
+                    impact of the work.
+                </p>
+                <div class="profile-tags">
+                    <span>Brand Strategy</span>
+                    <span>Product Design</span>
+                    <span>UX Research</span>
+                    <span>Storytelling</span>
+                    <span>Growth</span>
+                </div>
+            </div>
+
+            <div class="profile-card profile-card--grid">
+                <div>
+                    <h3>Current focus</h3>
+                    <p>Expanding an omni-channel storefront, refining onboarding, and exploring new AI-assisted workflows.</p>
+                </div>
+                <div>
+                    <h3>Availability</h3>
+                    <p>Open to short-term collaborations, mentorship, and product advisory sessions.</p>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-card__header">
+                    <h3>Recent activity</h3>
+                    <button class="btn btn-sm btn-outline-primary">View all</button>
+                </div>
+                <ul class="activity-list">
+                    <li>
+                        <div class="activity-icon">🎯</div>
+                        <div>
+                            <p class="activity-title">Launched "Spring Reset" collection</p>
+                            <p class="activity-meta">2 days ago · 3.2k views</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="activity-icon">🧩</div>
+                        <div>
+                            <p class="activity-title">Added 6 new UI kits to the library</p>
+                            <p class="activity-meta">1 week ago · 824 saves</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="activity-icon">🚀</div>
+                        <div>
+                            <p class="activity-title">Hosted a live Q&amp;A with 400+ attendees</p>
+                            <p class="activity-meta">2 weeks ago · 94 comments</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="profile-card">
+                <h3>Contact</h3>
+                <ul class="profile-contact">
+                    <li><span>Email</span><span data-profile-email>hello@studioeight.com</span></li>
+                    <li><span>Location</span><span data-profile-location>Toronto, CA</span></li>
+                    <li><span>Timezone</span><span data-profile-timezone>GMT -5</span></li>
+                </ul>
+                <button class="btn btn-outline-primary w-100">Request collaboration</button>
+            </div>
+
+            <div class="profile-card">
+                <h3>Highlights</h3>
+                <div class="highlight-grid">
+                    <div>
+                        <p class="highlight-value">98%</p>
+                        <p class="highlight-label">Client satisfaction</p>
+                    </div>
+                    <div>
+                        <p class="highlight-value">24</p>
+                        <p class="highlight-label">Global awards</p>
+                    </div>
+                    <div>
+                        <p class="highlight-value">72h</p>
+                        <p class="highlight-label">Avg. response</p>
+                    </div>
+                    <div>
+                        <p class="highlight-value">15</p>
+                        <p class="highlight-label">Team members</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <h3>Collections</h3>
+                <div class="collection-card">
+                    <div>
+                        <p class="collection-title">Retail Launch Kit</p>
+                        <p class="collection-meta">12 assets · Updated 3 days ago</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary">Preview</button>
+                </div>
+                <div class="collection-card">
+                    <div>
+                        <p class="collection-title">Holiday Campaigns</p>
+                        <p class="collection-meta">8 assets · Updated 2 weeks ago</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary">Preview</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container profile-section" data-animate>
+    <div class="profile-card">
+        <div class="profile-card__header">
+            <h3>Portfolio snapshots</h3>
+            <button class="btn btn-sm btn-outline-primary">Download press kit</button>
+        </div>
+        <div class="portfolio-grid">
+            <article class="portfolio-card">
+                <div class="portfolio-thumb" aria-hidden="true">A1</div>
+                <h4>Immersive storefront</h4>
+                <p>Concept to launch in 6 weeks, 30% revenue uplift.</p>
+            </article>
+            <article class="portfolio-card">
+                <div class="portfolio-thumb" aria-hidden="true">B2</div>
+                <h4>Creator analytics</h4>
+                <p>Unified dashboards for data-driven merchandising teams.</p>
+            </article>
+            <article class="portfolio-card">
+                <div class="portfolio-thumb" aria-hidden="true">C3</div>
+                <h4>Community lounge</h4>
+                <p>Membership hub with 4x engagement and daily events.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        const followBtn = document.getElementById("followBtn");
+        const messageBtn = document.getElementById("messageBtn");
+        const copyBtn = document.getElementById("copyBtn");
+        const copyStatus = document.getElementById("copyStatus");
+        const sections = document.querySelectorAll("[data-animate]");
+
+        followBtn?.addEventListener("click", () => {
+            const isFollowing = followBtn.classList.toggle("is-following");
+            followBtn.textContent = isFollowing ? "Following" : "Follow";
+        });
+
+        messageBtn?.addEventListener("click", () => {
+            messageBtn.classList.toggle("is-active");
+            messageBtn.textContent = messageBtn.classList.contains("is-active")
+                ? "Message sent"
+                : "Send message";
+        });
+
+        copyBtn?.addEventListener("click", async () => {
+            try {
+                await navigator.clipboard.writeText(window.location.href);
+                copyStatus.textContent = "Link copied";
+                copyStatus.classList.add("is-visible");
+                setTimeout(() => copyStatus.classList.remove("is-visible"), 2000);
+            } catch (error) {
+                copyStatus.textContent = "Copy failed";
+                copyStatus.classList.add("is-visible");
+            }
+        });
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("in-view");
+                    }
+                });
+            },
+            { threshold: 0.2 }
+        );
+
+        sections.forEach((section) => observer.observe(section));
+
+        const params = new URLSearchParams(window.location.search);
+        const username = params.get("username") || params.get("profile");
+
+        if (username) {
+            document.querySelectorAll("[data-profile-handle]").forEach((el) => {
+                el.textContent = `@${username}`;
+            });
+            document.querySelectorAll("[data-profile-name]").forEach((el) => {
+                el.textContent = username.replace(/[-_]/g, " ");
+            });
+        }
+    </script>
+}
