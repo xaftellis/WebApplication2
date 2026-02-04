@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WebApplication2.Data;
 using WebApplication2.Models;
-using System.Drawing;
 
 namespace WebApplication2.Controllers
 {
@@ -22,25 +20,40 @@ namespace WebApplication2.Controllers
 
         public IActionResult New()
         {
-            return View();
+            return View(new Product());
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create(Product model)
-        //{
-        //    if (!ModelState.IsValid) return View(model);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> New(Product model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-        //    if (model.Photo != null && model.Photo.Length > 0)
-        //    {
-        //        using var ms = new MemoryStream();
-        //    }
+            var product = new Product
+            {
+                Id = Guid.NewGuid(),
+                UserId = HttpContext.Request.Cookies["UserId"],
+                Name = model.Name,
+                Description = model.Description,
+                Price = model.Price,
+                DateCreated = DateTime.UtcNow
+            };
 
-        //    _context.Products.Add(model);
-        //    await _context.SaveChangesAsync();
+            if (model.FormImage is { Length: > 0 })
+            {
+                using var memoryStream = new MemoryStream();
+                await model.FormImage.CopyToAsync(memoryStream);
+                product.Photo = memoryStream.ToArray();
+            }
 
-        //    return RedirectToAction(nameof(Index));
-        //}
+            dbContext.Products.Add(product);
+            await dbContext.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
 
     }
 }

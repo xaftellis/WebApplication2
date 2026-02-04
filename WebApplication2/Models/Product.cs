@@ -15,11 +15,14 @@ namespace WebApplication2.Models
 
         public string Description { get; set; }  // Item description
 
-        //[Range(typeof(decimal), "0.01", "79228162514264337593543950335")]
-        //[DataType(DataType.Currency)]
-        //[Column(TypeName = "decimal(18, 2)")]
+        [Range(typeof(decimal), "0.01", "79228162514264337593543950335")]
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
 
         public DateTime DateCreated { get; set; } = DateTime.Now; // When it was added
+
+        [NotMapped]
+        public IFormFile FormImage { get; set; }
     }
 }

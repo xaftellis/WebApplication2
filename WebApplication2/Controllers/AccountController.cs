@@ -96,7 +96,6 @@ namespace WebApplication2.Controllers
 
                 return View(viewModel);
             }
-
             HttpContext.Response.Cookies.Append("UserId", user.Id.ToString());
             HttpContext.Response.Cookies.Append("UserName", user.Username.ToString());
             HttpContext.Response.Cookies.Append("UserEmail", user.Email);

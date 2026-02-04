@@ -1,44 +1,45 @@
 ﻿@{
-        ViewData["Title"] = "New Listing";
+    ViewData["Title"] = "New Listing";
 }
 @model WebApplication2.Models.Product
-<h1>Create Account</h1>
+<h1>Create Listing</h1>
 
 @* ===== Single-image Dropzone (paste into a .cshtml view) ===== *@
 
-<div class="upload-wrapper mt-4">
-    <label class="form-label fw-semibold">Upload Cover Image</label>
+<form method="post" asp-action="New" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <div class="upload-wrapper mt-4">
+        <label class="form-label fw-semibold">Upload Cover Image</label>
 
-    <div class="upload-dropzone" id="dropzone" role="button" aria-label="Upload image">
-        <!-- single file input (no multiple) -->
-        <input type="file"
-               id="fileInput"
-               name="Image"
-               accept="image/*"
-               hidden />
+        <div class="upload-dropzone" id="dropzone" role="button" aria-label="Upload image">
+            <!-- single file input (no multiple) -->
+            <input type="file"
+                   id="fileInput"
+                   asp-for="FormImage"
+                   accept="image/*"
+                   hidden />
 
-        <!-- placeholder content (will be replaced by preview) -->
-        <div class="upload-content" id="dropzonePlaceholder">
-            <div class="upload-icon">📁</div>
-            <div class="upload-text">
-                <strong>Drag & drop an image here</strong>
-                <div class="text-muted">or click to browse</div>
+            <!-- placeholder content (will be replaced by preview) -->
+            <div class="upload-content" id="dropzonePlaceholder">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">
+                    <strong>Drag & drop an image here</strong>
+                    <div class="text-muted">or click to browse</div>
+                </div>
+            </div>
+
+            <!-- preview container lives inside the dropzone -->
+            <div class="drop-preview" id="dropPreview" aria-hidden="true" style="display:none;">
+                <!-- preview injected here by JS -->
             </div>
         </div>
-
-        <!-- preview container lives inside the dropzone -->
-        <div class="drop-preview" id="dropPreview" aria-hidden="true" style="display:none;">
-            <!-- preview injected here by JS -->
-        </div>
+        <div class="form-text text-muted mt-2">Accepted: images only. One image.</div>
+        <span class="text-danger" asp-validation-for="FormImage"></span>
     </div>
 
-    <div class="form-text text-muted mt-2">Accepted: images only. One image.</div>
-</div>
-
-<form method="post">
     <div class="mt-3">
         <label class="form-label">Name</label>
-        <input type="email" class="form-control" asp-for="Name" />
+        <input type="text" class="form-control" asp-for="Name" />
         <span class="text-danger" asp-validation-for="Name"></span>
     </div>
 
@@ -51,6 +52,12 @@
                   placeholder="Write a detailed description..."></textarea>
 
         <span class="text-danger" asp-validation-for="Description"></span>
+    </div>
+
+    <div class="mt-3">
+        <label class="form-label">Price</label>
+        <input type="number" class="form-control" asp-for="Price" step="0.01" min="0" />
+        <span class="text-danger" asp-validation-for="Price"></span>
     </div>
 
     <div class="mt-3">
@@ -341,4 +348,3 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-
