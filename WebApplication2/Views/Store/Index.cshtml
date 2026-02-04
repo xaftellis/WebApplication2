@@ -1,11 +1,29 @@
-﻿@{
+﻿@model IEnumerable<Product>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <h2>Product Grid Example</h2>
 
 <div class="grid">
-    <div class="product" onclick="alert('Clicked Product 1')">
+    @foreach (var item in Model)
+    {
+        var base64 = Convert.ToBase64String(item.Photo);
+        var imgSrc = $"data:image/jpeg;base64,{base64}";
+
+        <div class="product">
+            <img src="@imgSrc" alt="@item.Name" />
+            <div class="product-content">
+                <div class="product-name">@item.Name</div>
+                <div class="product-desc">@item.Description</div>
+                <div class="product-price">$@item.Price</div>
+                <div class="product-posted">Posted @item.DateCreated.ToString("dd") @item.DateCreated.ToString("MMM")</div>
+            </div>
+        </div>
+    }
+
+    @* <div class="product" onclick="alert('Clicked Product 1')">
         <img src="https://picsum.photos/seed/product1/300/150" alt="Product 1" />
         <div class="product-content">
             <div class="product-name">Product 1</div>
@@ -33,118 +51,7 @@
             <div class="product-price">$49.99</div>
             <div class="product-posted">Posted Jan 27</div>
         </div>
-    </div>
-
-    <div class="product" onclick="alert('Clicked Product 4')">
-        <img src="https://picsum.photos/seed/product4/300/150" alt="Product 4" />
-        <div class="product-content">
-            <div class="product-name">Product 4</div>
-            <div class="product-desc">Short description of Product 4.</div>
-            <div class="product-price">$59.99</div>
-            <div class="product-posted">Posted Jan 28</div>
-        </div>
-    </div>
-
-    <div class="product" onclick="alert('Clicked Product 5')">
-        <img src="https://picsum.photos/seed/product5/300/150" alt="Product 5" />
-        <div class="product-content">
-            <div class="product-name">Product 5</div>
-            <div class="product-desc">Short description of Product 5.</div>
-            <div class="product-price">$19.99</div>
-            <div class="product-posted">Posted Jan 29</div>
-        </div>
-    </div>
-
-    <div class="product" onclick="alert('Clicked Product 6')">
-        <img src="https://picsum.photos/seed/product6/300/150" alt="Product 6" />
-        <div class="product-content">
-            <div class="product-name">Product 6</div>
-            <div class="product-desc">Short description of Product 6.</div>
-            <div class="product-price">$24.99</div>
-            <div class="product-posted">Posted Jan 30</div>
-        </div>
-    </div>
-
-    <div class="product" onclick="alert('Clicked Product 7')">
-        <img src="https://picsum.photos/seed/product7/300/150" alt="Product 7" />
-        <div class="product-content">
-            <div class="product-name">Product 7</div>
-            <div class="product-desc">Short description of Product 7.</div>
-            <div class="product-price">$34.99</div>
-            <div class="product-posted">Posted Jan 31</div>
-        </div>
-    </div>
-
-    <div class="product" onclick="alert('Clicked Product 8')">
-        <img src="https://picsum.photos/seed/product8/300/150" alt="Product 8" />
-        <div class="product-content">
-            <div class="product-name">Product 8</div>
-            <div class="product-desc">Short description of Product 8.</div>
-            <div class="product-price">$44.99</div>
-            <div class="product-posted">Posted Feb 1</div>
-        </div>
-    </div>
-
-    <div class="product" onclick="alert('Clicked Product 9')">
-        <img src="https://picsum.photos/seed/product9/300/150" alt="Product 9" />
-        <div class="product-content">
-            <div class="product-name">Product 9</div>
-            <div class="product-desc">Short description of Product 9.</div>
-            <div class="product-price">$54.99</div>
-            <div class="product-posted">Posted Feb 2</div>
-        </div>
-    </div>
-
-    <div class="product" onclick="alert('Clicked Product 10')">
-        <img src="https://picsum.photos/seed/product10/300/150" alt="Product 10" />
-        <div class="product-content">
-            <div class="product-name">Product 10</div>
-            <div class="product-desc">Short description of Product 10.</div>
-            <div class="product-price">$64.99</div>
-            <div class="product-posted">Posted Feb 3</div>
-        </div>
-    </div>
-
-    <div class="product" onclick="alert('Clicked Product 11')">
-        <img src="https://picsum.photos/seed/product11/300/150" alt="Product 11" />
-        <div class="product-content">
-            <div class="product-name">Product 11</div>
-            <div class="product-desc">Short description of Product 11.</div>
-            <div class="product-price">$27.49</div>
-            <div class="product-posted">Posted Feb 4</div>
-        </div>
-    </div>
-
-    <div class="product" onclick="alert('Clicked Product 12')">
-        <img src="https://picsum.photos/seed/product12/300/150" alt="Product 12" />
-        <div class="product-content">
-            <div class="product-name">Product 12</div>
-            <div class="product-desc">Short description of Product 12.</div>
-            <div class="product-price">$31.99</div>
-            <div class="product-posted">Posted Feb 5</div>
-        </div>
-    </div>
-
-    <div class="product" onclick="alert('Clicked Product 13')">
-        <img src="https://picsum.photos/seed/product13/300/150" alt="Product 13" />
-        <div class="product-content">
-            <div class="product-name">Product 13</div>
-            <div class="product-desc">Short description of Product 13.</div>
-            <div class="product-price">$41.25</div>
-            <div class="product-posted">Posted Feb 6</div>
-        </div>
-    </div>
-
-    <div class="product" onclick="alert('Clicked Product 14')">
-        <img src="https://picsum.photos/seed/product14/300/150" alt="Product 14" />
-        <div class="product-content">
-            <div class="product-name">Product 14</div>
-            <div class="product-desc">Short description of Product 14.</div>
-            <div class="product-price">$58.75</div>
-            <div class="product-posted">Posted Feb 7</div>
-        </div>
-    </div>
-
+    </div> *@
 </div>
 
 <style>

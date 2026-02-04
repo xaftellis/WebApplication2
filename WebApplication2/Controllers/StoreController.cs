@@ -15,11 +15,16 @@ namespace WebApplication2.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(dbContext.Products.OrderByDescending(x => x.DateCreated).ToList());
         }
 
         public IActionResult New()
         {
+            if (string.IsNullOrEmpty(HttpContext.Request.Cookies["UserId"]))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             return View(new Product());
         }
 
